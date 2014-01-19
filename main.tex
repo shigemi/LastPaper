@@ -10,62 +10,68 @@
 % ■ 文献リスト
 %	¥begin{bib}[100] 〜 ¥end{bib}
 
+\long\def\comment#1{}
 
-¥newif¥ifjapanese
+\newif\ifjapanese
 
-¥japanesetrue	% 論文全体を日本語で書く（英語で書くならコメントアウト）
+\japanesetrue	% 論文全体を日本語で書く（英語で書くならコメントアウト）
 
-¥ifjapanese
-	¥documentclass[11pt]{jreport}
-	¥renewcommand{¥bibname}{参考文献}
-	¥newcommand{¥acknowledgmentname}{謝辞}
-¥else
-	¥documentclass[11pt]{report}
-	¥newcommand{¥acknowledgmentname}{Acknowledgment}
-¥fi
-¥usepackage{ascmac}
-¥usepackage{graphicx}
-¥usepackage{multirow}
-¥usepackage{ylab_thesis}
+\ifjapanese
+  \documentclass[11pt]{jreport}
+  \renewcommand{\bibname}{参考文献}
+  \newcommand{\acknowledgmentname}{謝辞}
+\else
+  \documentclass[11pt]{report}
+  \newcommand{\acknowledgmentname}{Acknowledgment}
+\fi
 
+\usepackage{thesis}
+\usepackage{ascmac}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{url}
+% \usepackage{ylab_thesis}
 
-¥bindermode	% バインダ用余白設定
+\bindermode	% バインダ用余白設定
 
 % 日本語情報（必要なら）
-¥jclass	{卒業論文}							% 論文種別
-¥jtitle		{Android端末を用いたバランスボードシステムの提案}			% タイトル。改行する場合は¥¥を入れる
-¥juniv		{慶應義塾大学}						% 大学名
-¥jfaculty	{環境情報学部 環境情報学科}				% 学部、学科
-¥jauthor	{重田 瑞希}						% 著者
-¥jadvisor	{増井 俊之}{教授}					% 指導教官、形式は『{名前}{肩書}』
-¥jhyear	{25}								% 平成○年度
-¥jsyear	{2013}							% 西暦○年度
-%¥jkeyword	{¥LaTeX、テンプレート、卒業論文}			% 論文のキーワード
+\jclass	{卒業論文}							% 論文種別
+\jtitle		{Android端末を用いたバランスボードシステムの提案}			% タイトル。改行する場合は\\を入れる
+\juniv		{慶應義塾大学}						% 大学名
+\jfaculty	{環境情報学部 環境情報学科}				% 学部、学科
+\jauthor	{重田 瑞希}						% 著者
+\jadvisor	{増井 俊之}{教授}					% 指導教官、形式は『{名前}{肩書}』
+\jhyear	{25}								% 平成○年度
+\jsyear	{2013}							% 西暦○年度
+%\jkeyword	{\LaTeX、テンプレート、卒業論文}			% 論文のキーワード
 
 
-¥begin{document}
+\begin{document}
 
-¥jmaketitle		% 表紙（日本語）、不要ならコメントアウト
-%¥emaketitle		% 表紙（英語）、不要ならコメントアウト
+%\ifjapanese
+%  \jmaketitle % 表紙（日本語）
+%\else
+%  \emaketitle % 表紙（英語）
+%\fi
 
-¥include{00_abstract}	% アブストラクト。要独自コマンド、include先参照のこと
+\include{00_abstract}	% アブストラクト。要独自コマンド、include先参照のこと
 
-¥tableofcontents	% 目次
-¥listoffigures		% 図目次
+\tableofcontents	% 目次
+\listoffigures		% 図目次
 
-¥pagenumbering{arabic}
+\pagenumbering{arabic}
 
-¥include{01}	% 本文1
-¥include{02}	% 本文2
-¥include{03}	% 本文3
-¥include{04}	% 本文4
-¥include{05}	% 本文4
-¥include{06}	% 本文4
+\include{01}	% 本文1
+\include{02}	% 本文2
+\include{03}	% 本文3
+\include{04}	% 本文4
+\include{05}	% 本文4
+\include{06}	% 本文4
 
-¥include{90_acknowledgment}	% 謝辞。要独自コマンド、include先参照のこと
-¥include{91_bibliography}	% 参考文献。要独自コマンド、include先参照のこと
-¥appendix
-¥include{92_appendix}		% 付録
+\include{90_acknowledgment}	% 謝辞。要独自コマンド、include先参照のこと
+\include{91_bibliography}	% 参考文献。要独自コマンド、include先参照のこと
+\appendix
+\include{92_appendix}		% 付録
 
-¥end{document}
+\end{document}
 

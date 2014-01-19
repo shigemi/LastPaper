@@ -1,45 +1,45 @@
-¥chapter{実装}
-¥label{chap:05}
+\chapter{実装}
+\label{chap:05}
 
 本章では、今回提案したシステムの実装・構成について述べる。
 
-¥section{システム構成}
+\section{システム構成}
 
 本研究では、Android端末で傾きを検知し、それをサーバに書き込みクライアントがその情報を取得する事でリアルタイムにグラフ描画する。
 
 そこで、以下のシステムが必要となる。
-¥begin{itemize}
-   ¥item バランスボードの傾きを検知し、NFCに対応したAndroidOS端末
-   ¥item 傾き検知し、取得した情報をlinda-baseにタプルを投げるアプリケーション
-   ¥item 投げられたタプルを受信し、描画させるためのクライアント
-¥end{itemize}
+\begin{itemize}
+   \item バランスボードの傾きを検知し、NFCに対応したAndroidOS端末
+   \item 傾き検知し、取得した情報をlinda-baseにタプルを投げるアプリケーション
+   \item 投げられたタプルを受信し、描画させるためのクライアント
+\end{itemize}
 
 使用したAndroidOS端末はSAMSUNG社製のNexusS、実装言語はJavaScriptである。
 
 また、使用するlinda-baseは増井研究室のサーバ環境を用い（linda.masuilab.org）、本研究用にそこに「room2」というタプルスペースを作成した（linda.masuilab.org/room2）。そこにAndroid端末の傾き情報を書き込み、クライアント側はそこから情報を読み込みことで、サーバ間の送受信が可能となる。
 
 
-¥section{実装内容}
+\section{実装内容}
 
 タプルを送信する側のサーバを実装する。
 
 増井研究室の"linda-base"の下に"room2"というタプルスペースを作成し、接続する。
 
 
-¥begin{itembox}[l]{{¥tt balance send.js}}
-¥begin{verbatim}
+\begin{itembox}[l]{{\tt balance send.js}}
+\begin{verbatim}
 var io = new RocketIO().connect("http://linda.masuilab.org");
 var linda = new Linda(io);
 var ts = new linda.TupleSpace("room2");
 io.on("connect ",function(){
   alert(io.type+"connect ");
 });  
-¥end{verbatim}
-¥end{itembox}
+\end{verbatim}
+\end{itembox}
 
 
 
-¥hspace{30mm} 
+\hspace{30mm} 
 
 以上でlinda.masuilab.org/room2との通信が可能となる。
 
@@ -49,8 +49,8 @@ io.on("connect ",function(){
 今回はインターバルを0.3秒に設定した。
 
 
-¥begin{itembox}[l]{{¥tt balance send.js}}
-¥begin{verbatim}
+\begin{itembox}[l]{{\tt balance send.js}}
+\begin{verbatim}
 setInterval(function() {
         var x = ii ;
         var ori = goldfish.orientation() ;
@@ -58,23 +58,23 @@ setInterval(function() {
         ts.write(["pitch",y]); 
         ii++;
 },300); 
-¥end{verbatim}
-¥end{itembox}
+\end{verbatim}
+\end{itembox}
 
-¥hspace{30mm}
+\hspace{30mm}
 
 この"write"によって、"room2"にタプルを書き込む。
 
-この状態を"linda.masuilab.org/room2"で確認すると、以下のようにlinda-baseの"room2"にタプルが送られている事が分かる。（図¥ref{fig:08}）
-¥hspace{30mm}
+この状態を"linda.masuilab.org/room2"で確認すると、以下のようにlinda-baseの"room2"にタプルが送られている事が分かる。（図\ref{fig:08}）
+\hspace{30mm}
 
-¥begin{figure}[htbp]
-    ¥begin{center}
-       ¥fbox{¥includegraphics[width=150mm]{image8.eps}}
-    ¥end{center}
-    ¥caption{linda-base}
-    ¥label{fig:08}
-¥end{figure}
+\begin{figure}[htbp]
+    \begin{center}
+       \fbox{\includegraphics[width=150mm]{image8.eps}}
+    \end{center}
+    \caption{linda-base}
+    \label{fig:08}
+\end{figure}
 
 
 
@@ -85,8 +85,8 @@ setInterval(function() {
 この際、送る側のサーバで設定した"[pitch]"を探すことで、一緒に送られている傾きのタプルを読み込める様になっている。
 
 
-¥begin{itembox}[l]{{¥tt balance host.js}}
-¥begin{verbatim}
+\begin{itembox}[l]{{\tt balance host.js}}
+\begin{verbatim}
 var xx = iii ;
      ts. watch(["pitch"],function(tuple){
             var k = tuple[1];
@@ -94,26 +94,26 @@ var xx = iii ;
             chart.draw(data, options);
             iii++;
     });
-¥end{verbatim}
-¥end{itembox}
+\end{verbatim}
+\end{itembox}
 
 
-¥hspace{30mm} 
+\hspace{30mm} 
 
 あとは読みこんだ値を描画するだけである。今回はリアルタイムにグラフ化を行った。
 
 この時、「GoogleChartTool」というGoogleが提供しているグラフ用ライブラリを使用した。
 
-以下がその結果である。（図¥ref{fig:10}）
-¥hspace{30mm}
+以下がその結果である。（図\ref{fig:10}）
+\hspace{30mm}
 
-¥begin{figure}[htbp]
-    ¥begin{center}
-       ¥fbox{¥includegraphics[width=150mm]{image10.eps}}
-    ¥end{center}
-    ¥caption{linda-base}
-    ¥label{fig:10}
-¥end{figure}
+\begin{figure}[htbp]
+    \begin{center}
+       \fbox{\includegraphics[width=150mm]{image10.eps}}
+    \end{center}
+    \caption{linda-base}
+    \label{fig:10}
+\end{figure}
 
 
 
