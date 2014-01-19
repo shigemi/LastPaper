@@ -1,0 +1,49 @@
+¥chapter{要素技術}
+¥label{chap:04}
+
+本章では、今回の実装に用いた要素技術として、GoldFish, Lindaについて説明を行いたい．
+
+¥section{GoldFish}
+
+GoldFishは、同研究室の橋本翔氏が開発したアプリケーション製作のためのフレームワークである。
+
+これは、Android NFCとJavaScriptだけで実世界GUIが作れるというもので、特徴としては、
+
+¥begin{itemize}
+   ¥item AndroidでNFCタグに触るとアプリが起動する
+   ¥item JavaScriptでアプリケーションを書く事ができる
+   ¥item ネイティブアプリとのブリッジがあり、JavaScriptからAndroidの各種センサにアクセスする事ができる
+    ¥item NFCタグタッチ時にアプリケーションがロードされるため、アプリケーションをインストールしていなくても使える
+ ¥end{itemize}
+ 
+の４点が挙げられる。
+
+
+NFC対応のAndroid端末でタグを読み込む事で、ubif.orgに登録されているリストを参照し、webページにアクセスできる仕組みになっている。
+
+利用例として、研究室ではNFCタグをAndroid端末でタッチし、Android端末を傾けることで研究室のドアが開くというシステムが取り入れられている。これはAndroid端末をNFCタグにタッチした時にアプリケーションが開き、ジェスチャー入力でドアサーバに「open」信号を伝えることで、鍵が空く仕組みになっている。
+
+
+¥section{Linda}
+
+Lindaとは、1980年代にイェール大学で生まれた並列プログラミング言語であり、JavaやC言語といった他の言語上に拡張して実装される。
+
+タプルスペース（tuplespace）と呼ばれる共有メモリ空間に、型つきのデータレコード（タプル）を格納する。in/out/rd/inp/rdpという命令で操作することで、大抵の並列処理が記述できる。
+
+今回は、橋本翔氏が開発したlinda-base¥cite{hoge10}というサーバ環境を用い、javascriptを用いて実装を行った。
+
+研究室には温度や照度などの様々なセンサが設置されており、常に増井研究室のlinda-base（linda.masuilab.org/delta）に情報が投げられている。（図¥ref{fig:linda}）
+
+¥begin{figure}[htbp]
+    ¥begin{center}
+       ¥fbox{¥includegraphics[width=150mm]{image_linda.eps}}
+    ¥end{center}
+    ¥caption{linda.masuilab.org/delta}
+    ¥label{fig:linda}
+¥end{figure}
+
+
+
+
+
+
